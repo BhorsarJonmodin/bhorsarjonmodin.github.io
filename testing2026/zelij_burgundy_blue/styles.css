@@ -1,0 +1,563 @@
+/* ==========================================================================
+   MOROCCAN ZELIJ BACKGROUND WITH MERGED GOLD OVERLAY & MINA BANGLA BOXES
+   Pure CSS3 - Fully documented rules covering viewport pinning, Moroccan blue
+   offset rectangle, Mina font typography, and ivory theme modifiers.
+   ========================================================================== */
+
+/* Import Bangla Google Font Mina (fallback if CDN link is blocked or cached) */
+@import url('https://fonts.googleapis.com/css2?family=Mina:wght@400;700&display=swap');
+
+/* Root theme variables for palettes, rectangle offsets, and sizing */
+:root {
+  --gold-primary: #d4af37;             /* 24k gold for thin outlines */
+  --gold-highlight: #fff3b0;           /* Specular gold highlight */
+  --burgundy-rosette: #721121;         /* Deep Moroccan burgundy */
+  --purple-base: #6b21a8;              /* Royal purple ceramic tile base */
+  --purple-deep: #3b0764;              /* Deep amethyst joint fill */
+  --moroccan-blue: #0f52ba;            /* Moroccan cobalt blue */
+  --rect-offset: 32px;                 /* Distance offset from viewport edges */
+  --rect-thickness: 4px;               /* Thin line thickness of Moroccan blue rectangle */
+  --inner-stage-gap: 16px;             /* Internal breathing gap between blue line & boxes */
+  --panel-bg: rgba(46, 16, 101, 0.94); /* Increased opacity translucent royal purple background for UI */
+  --panel-border: rgba(212, 175, 55, 0.45); /* Thin gold border */
+  --text-main: #f9f5f0;                /* Warm parchment white */
+  --text-muted: #d4c7d0;               /* Soft muted text */
+  --font-bangla: 'Mina', system-ui, -apple-system, sans-serif; /* Mina font family */
+}
+
+/* Reset margins, paddings, and box-sizing to eliminate unexpected scrollbars */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Guarantee html and body occupy exactly 100% of the viewport */
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--purple-deep, #3b0764);
+  font-family: var(--font-bangla);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   1. FULL-VIEWPORT ZELIJ BACKGROUND & UNIFIED CANVAS
+   ========================================================================== */
+
+/* Background wrapper locked to all four viewport edges (100vw x 100vh) */
+#zelij-viewport-background {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none; /* Let all clicks pass through to floating boxes and UI */
+  overflow: hidden;
+}
+
+/* Single unified canvas rendering base ceramic tiles AND thin golden outline */
+#zelij-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   2. THIN MOROCCAN BLUE RECTANGLE OFFSET FROM VIEWPORT BOUNDARIES
+   ========================================================================== */
+
+/* Thin rectangle inset from all four viewport boundaries */
+.moroccan-blue-offset-rect {
+  position: absolute;
+  top: var(--rect-offset, 32px);
+  right: var(--rect-offset, 32px);
+  bottom: var(--rect-offset, 32px);
+  left: var(--rect-offset, 32px);
+  z-index: 2;
+  border: var(--rect-thickness, 4px) solid var(--moroccan-blue);
+  /* Traced on both outer and inner edges by a thin golden line */
+  outline: 1px solid rgba(212, 175, 55, 0.85);
+  box-shadow:
+    inset 0 0 0 1px rgba(212, 175, 55, 0.85),
+    0 0 12px rgba(15, 82, 186, 0.4),
+    inset 0 0 8px rgba(15, 82, 186, 0.3);
+  pointer-events: none;
+  transition: top 0.1s ease, right 0.1s ease, bottom 0.1s ease, left 0.1s ease, border-width 0.1s ease;
+}
+
+/* Ambient vignette layer for perimeter depth */
+.zelij-vignette-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: radial-gradient(
+    circle at center,
+    transparent 58%,
+    rgba(59, 7, 100, 0.42) 100%
+  );
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   3. INNER SAFE-ZONE STAGE & SCROLLABLE FLOATING BOXES CONTAINER
+   ========================================================================== */
+
+/* Inner stage locked strictly inside the Moroccan blue offset rectangle */
+.blue-frame-inner-stage {
+  position: fixed;
+  /* Top, right, bottom, left insets mathematically bound the stage inside the blue line */
+  top: calc(var(--rect-offset, 32px) + var(--rect-thickness, 4px) + var(--inner-stage-gap, 16px));
+  right: calc(var(--rect-offset, 32px) + var(--rect-thickness, 4px) + var(--inner-stage-gap, 16px));
+  bottom: calc(var(--rect-offset, 32px) + var(--rect-thickness, 4px) + var(--inner-stage-gap, 16px));
+  left: calc(var(--rect-offset, 32px) + var(--rect-thickness, 4px) + var(--inner-stage-gap, 16px));
+  z-index: 8;
+  max-width: calc(100vw - (var(--rect-offset, 32px) + var(--rect-thickness, 4px) + var(--inner-stage-gap, 16px)) * 2);
+  max-height: calc(100vh - (var(--rect-offset, 32px) + var(--rect-thickness, 4px) + var(--inner-stage-gap, 16px)) * 2);
+  overflow: hidden;
+  pointer-events: none; /* Empty stage space allows clicks through to background */
+}
+
+/* Scrollable container for floating boxes: automatically scrolls when multiple boxes are present */
+.floating-boxes-scroll-container {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  /* Enable smooth vertical scrolling when multiple boxes exceed viewport space */
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 4px 14px 20px 4px;
+  /* Custom thin golden scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 175, 55, 0.5) rgba(59, 7, 100, 0.2);
+}
+
+.floating-boxes-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.floating-boxes-scroll-container::-webkit-scrollbar-track {
+  background: rgba(59, 7, 100, 0.2);
+  border-radius: 3px;
+}
+
+.floating-boxes-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.5);
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   4. FLOATING BOX BASE STYLING (NO VIEWPORT CAPS, NO INTERNAL SCROLL)
+   ========================================================================== */
+
+/* Floating box card element: elongates naturally without internal scrollbars */
+.zelij-floating-box {
+  pointer-events: auto; /* Re-enable pointer events for text selection and buttons */
+  width: 420px;
+  max-width: none;  /* Removed viewport boundary protection */
+  max-height: none; /* Can elongate to any height required by its content */
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  padding: 16px 20px;
+  color: var(--text-main);
+  font-family: var(--font-bangla);
+  /* Thin golden outer border paired with an inner Moroccan blue hairline */
+  border: 1px solid rgba(212, 175, 55, 0.72);
+  box-shadow:
+    0 12px 32px rgba(18, 4, 36, 0.58),
+    inset 0 0 0 1px rgba(15, 82, 186, 0.45);
+  transition:
+    background-color 0.25s ease,
+    backdrop-filter 0.25s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.25s ease;
+  flex-shrink: 0; /* Maintain natural card dimensions inside flex container */
+}
+
+.zelij-floating-box:hover {
+  border-color: var(--gold-highlight);
+  box-shadow:
+    0 16px 40px rgba(18, 4, 36, 0.72),
+    inset 0 0 0 1px rgba(212, 175, 55, 0.5);
+}
+
+/* ==========================================================================
+   5. COLOR THEMES: TRANSLUCENT & OPAQUE (PURPLE, BURGUNDY, BLUE & IVORY)
+   ========================================================================== */
+
+/* ----------------- TRANSLUCENT MODIFIERS (FROSTED GLASS) ----------------- */
+.zelij-floating-box.is-translucent {
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+.zelij-floating-box.is-translucent.theme-purple {
+  background-color: rgba(46, 16, 101, 0.50); /* ~50% opacity royal amethyst purple */
+  color: #f9f5f0;
+}
+
+.zelij-floating-box.is-translucent.theme-burgundy {
+  background-color: rgba(92, 14, 28, 0.50); /* ~50% opacity imperial wine burgundy */
+  color: #fbf5f6;
+}
+
+.zelij-floating-box.is-translucent.theme-blue {
+  background-color: rgba(15, 60, 136, 0.50); /* ~50% opacity Moroccan cobalt blue */
+  color: #f4f8fe;
+}
+
+/* NEW TRANSLUCENT IVORY THEME */
+.zelij-floating-box.is-translucent.theme-ivory {
+  background-color: rgba(248, 244, 232, 0.52); /* ~50% opacity warm ivory / alabaster */
+  color: #1e132a; /* Deep ink tone for crisp legibility against light ivory */
+  border: 1px solid rgba(184, 134, 11, 0.75);
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.42),
+    inset 0 0 0 1px rgba(212, 175, 55, 0.5);
+}
+
+.zelij-floating-box.is-translucent.theme-ivory .floating-box-tag {
+  color: #721121; /* Burgundy accent tag for ivory card */
+}
+
+.zelij-floating-box.is-translucent.theme-ivory .floating-box-title {
+  color: #1a0f26;
+}
+
+.zelij-floating-box.is-translucent.theme-ivory .bengali-declaration-text {
+  color: #241432;
+}
+
+.zelij-floating-box.is-translucent.theme-ivory .floating-box-meta {
+  color: #5c4a5e;
+}
+
+.zelij-floating-box.is-translucent.theme-ivory .floating-box-action {
+  background: rgba(114, 17, 33, 0.12);
+  color: #721121;
+  border-color: rgba(114, 17, 33, 0.45);
+}
+
+.zelij-floating-box.is-translucent.theme-ivory .floating-box-action:hover {
+  background: rgba(114, 17, 33, 0.24);
+}
+
+/* -------------------- OPAQUE MODIFIERS (SOLID CERAMIC) ------------------- */
+.zelij-floating-box.is-opaque {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.zelij-floating-box.is-opaque.theme-purple {
+  background-color: #2b0952; /* Solid deep amethyst purple */
+  color: #f9f5f0;
+}
+
+.zelij-floating-box.is-opaque.theme-burgundy {
+  background-color: #450a16; /* Solid imperial burgundy */
+  color: #fbf5f6;
+}
+
+.zelij-floating-box.is-opaque.theme-blue {
+  background-color: #0c2d64; /* Solid Moroccan cobalt blue */
+  color: #f4f8fe;
+}
+
+/* NEW OPAQUE IVORY THEME */
+.zelij-floating-box.is-opaque.theme-ivory {
+  background-color: #f9f5ea; /* Solid warm hand-cast ivory ceramic */
+  color: #1a0f26;
+  border: 1px solid rgba(184, 134, 11, 0.85);
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(212, 175, 55, 0.6);
+}
+
+.zelij-floating-box.is-opaque.theme-ivory .floating-box-tag {
+  color: #721121;
+}
+
+.zelij-floating-box.is-opaque.theme-ivory .floating-box-title {
+  color: #1a0f26;
+}
+
+.zelij-floating-box.is-opaque.theme-ivory .bengali-declaration-text {
+  color: #241432;
+}
+
+.zelij-floating-box.is-opaque.theme-ivory .floating-box-meta {
+  color: #5c4a5e;
+}
+
+.zelij-floating-box.is-opaque.theme-ivory .floating-box-action {
+  background: rgba(114, 17, 33, 0.12);
+  color: #721121;
+  border-color: rgba(114, 17, 33, 0.45);
+}
+
+.zelij-floating-box.is-opaque.theme-ivory .floating-box-action:hover {
+  background: rgba(114, 17, 33, 0.24);
+}
+
+/* ==========================================================================
+   6. FLOATING BOX INTERIOR TYPOGRAPHY & BANGLA MINA FONT
+   ========================================================================== */
+
+.floating-box-header {
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+}
+
+.floating-box-tag {
+  display: inline-block;
+  font-family: var(--font-bangla);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--gold-highlight);
+  margin-bottom: 2px;
+}
+
+.floating-box-title {
+  font-family: var(--font-bangla);
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.35;
+}
+
+.floating-box-body {
+  /* Removed internal scrolling: natural elongation without inner scrollbars */
+  overflow: visible;
+  max-height: none;
+  padding-right: 0;
+}
+
+/* Bengali text typeset in Mina font with generous line spacing */
+.bengali-declaration-text {
+  font-family: var(--font-bangla);
+  font-size: 0.96rem;
+  line-height: 1.68;
+  color: #f8f1f3;
+  margin-top: 4px;
+}
+
+.floating-box-footer {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(212, 175, 55, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.floating-box-meta {
+  font-family: var(--font-bangla);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.floating-box-action {
+  font-family: var(--font-bangla);
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  background: rgba(212, 175, 55, 0.16);
+  color: var(--gold-highlight);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.floating-box-action:hover {
+  background: rgba(212, 175, 55, 0.32);
+}
+
+/* ==========================================================================
+   7. FOREGROUND CONTROL INTERFACE (BOTTOM-RIGHT FLOATING CARD)
+   ========================================================================== */
+
+.viewport-foreground {
+  position: relative;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: calc(var(--rect-offset, 32px) + 16px);
+  pointer-events: none;
+}
+
+.control-card {
+  pointer-events: auto;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.65);
+}
+
+.control-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.badge-gold {
+  display: inline-block;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  color: var(--gold-highlight);
+  text-transform: uppercase;
+}
+
+.card-title {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+.icon-btn {
+  background: rgba(114, 17, 33, 0.45);
+  color: var(--gold-highlight);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  background: rgba(114, 17, 33, 0.7);
+}
+
+.control-body {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(212, 175, 55, 0.22);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control-body.is-collapsed {
+  display: none;
+}
+
+.card-description {
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.control-label {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.control-readout {
+  font-size: 0.72rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: var(--gold-highlight);
+}
+
+.control-select {
+  width: 100%;
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background-color: rgba(30, 10, 60, 0.92);
+  color: var(--text-main);
+  font-size: 0.76rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.control-slider {
+  width: 100%;
+  accent-color: var(--gold-primary);
+  cursor: pointer;
+}
+
+.button-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.primary-btn,
+.secondary-control-btn {
+  flex: 1;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+}
+
+.primary-btn {
+  border: 1px solid var(--gold-primary);
+  background: linear-gradient(135deg, rgba(114, 17, 33, 0.7), rgba(15, 82, 186, 0.6));
+  color: var(--gold-highlight);
+}
+
+.secondary-control-btn {
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(46, 16, 101, 0.75);
+  color: var(--text-main);
+}
+
+.primary-btn:hover,
+.secondary-control-btn:hover {
+  filter: brightness(1.2);
+}
+
+/* Responsive adjustments for mobile viewports */
+@media (max-width: 600px) {
+  .zelij-floating-box {
+    width: 100%;
+  }
+  .control-card {
+    width: 100%;
+  }
+}
