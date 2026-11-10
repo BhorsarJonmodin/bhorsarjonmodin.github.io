@@ -27,20 +27,8 @@
   const blueOffsetRectEl = document.getElementById("moroccan-blue-offset-rect");
   const floatingBoxesContainer = document.getElementById("floating-boxes-container");
 
-  // UI Control references
-  const paletteSelect = document.getElementById("palette-select");
-  const rectOffsetSlider = document.getElementById("rect-offset-slider");
-  const rectOffsetValueLabel = document.getElementById("rect-offset-value");
-  const rectThicknessSlider = document.getElementById("rect-thickness-slider");
-  const rectThicknessValueLabel = document.getElementById("rect-thickness-value");
-  const scaleSlider = document.getElementById("scale-slider");
-  const scaleValueLabel = document.getElementById("scale-value");
-  const goldWidthSlider = document.getElementById("gold-width-slider");
-  const goldWidthValueLabel = document.getElementById("gold-width-value");
-  const regenerateBtn = document.getElementById("regenerate-btn");
-  const togglePanelBtn = document.getElementById("toggle-panel-btn");
-  const toggleAllOpacityBtn = document.getElementById("toggle-all-opacity-btn");
-  const controlBody = document.getElementById("control-body");
+  // Fine-tuning customization panel removed per user request.
+  // The Moroccan Zelij pattern, golden overlay, and floating boxes render in pure unobstructed display mode.
 
   // Traditional Moroccan ceramic palettes with burgundy rosettes and royal purple base
   const PALETTES = {
@@ -603,71 +591,7 @@
     });
   }
 
-  // Toggle all 4 floating boxes simultaneously between translucent and opaque
-  if (toggleAllOpacityBtn) {
-    let allOpaque = false;
-    toggleAllOpacityBtn.addEventListener("click", function () {
-      allOpaque = !allOpaque;
-      const boxes = document.querySelectorAll(".zelij-floating-box");
-      boxes.forEach((box) => {
-        box.classList.toggle("is-opaque", allOpaque);
-        box.classList.toggle("is-translucent", !allOpaque);
-        updateBoxMeta(box, allOpaque);
-      });
-      toggleAllOpacityBtn.textContent = allOpaque ? "All Translucent" : "All Opaque";
-    });
-  }
-
-  // Palette selector
-  paletteSelect.addEventListener("change", function (event) {
-    state.paletteKey = event.target.value;
-    renderMergedZelijCanvas();
-  });
-
-  // Moroccan blue offset slider
-  rectOffsetSlider.addEventListener("input", function (event) {
-    state.rectOffset = parseInt(event.target.value, 10);
-    rectOffsetValueLabel.textContent = `${state.rectOffset} px`;
-    renderMergedZelijCanvas();
-    enforceFloatingBoxViewportLimits();
-  });
-
-  // Moroccan blue thickness slider
-  rectThicknessSlider.addEventListener("input", function (event) {
-    state.rectThickness = parseFloat(event.target.value);
-    rectThicknessValueLabel.textContent = `${state.rectThickness.toFixed(1)} px`;
-    renderMergedZelijCanvas();
-    enforceFloatingBoxViewportLimits();
-  });
-
-  // Tile scale slider
-  scaleSlider.addEventListener("input", function (event) {
-    state.cellSize = parseInt(event.target.value, 10);
-    scaleValueLabel.textContent = `${state.cellSize} px`;
-    computeViewportTessellation();
-    renderMergedZelijCanvas();
-  });
-
-  // Gold outline stroke width slider
-  goldWidthSlider.addEventListener("input", function (event) {
-    state.goldLineWidth = parseFloat(event.target.value);
-    goldWidthValueLabel.textContent = `${state.goldLineWidth.toFixed(1)} px`;
-    renderMergedZelijCanvas();
-  });
-
-  // Regenerate glaze variations
-  regenerateBtn.addEventListener("click", function () {
-    state.seed = Math.floor(Math.random() * 100000);
-    computeViewportTessellation();
-    renderMergedZelijCanvas();
-  });
-
-  // Toggle control panel
-  togglePanelBtn.addEventListener("click", function () {
-    const isCollapsed = controlBody.classList.toggle("is-collapsed");
-    togglePanelBtn.textContent = isCollapsed ? "Show UI" : "Hide UI";
-    togglePanelBtn.setAttribute("aria-expanded", String(!isCollapsed));
-  });
+  // (Fine-tuning UI controls removed: pattern renders in pure, clean display mode)
 
   // Window resize handler
   window.addEventListener("resize", resizeViewport);

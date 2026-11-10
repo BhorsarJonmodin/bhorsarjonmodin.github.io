@@ -7,7 +7,7 @@
   <!-- Ensure accurate full-viewport scaling on mobile and desktop displays -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Descriptive document title for the merged single-canvas Zelij background with Mina font -->
-  <title>Zelij Background — চার রঙের ভাসমান কাঁচ পাত্র ও সার্বজনীন মানবাধিকার ঘোষণাপত্র (Mina Font)</title>
+  <title>Testing 2026</title>
   
   <!-- Preconnect to Google Fonts for efficient and fast web font delivery -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -126,83 +126,7 @@
     </div>
   </section>
 
-  <!-- Non-intrusive foreground panel for live pattern and layout customization -->
-  <main class="viewport-foreground" id="foreground-ui">
-    <section class="control-card" id="control-card" aria-label="Pattern &amp; Box Controls">
-      <header class="control-header">
-        <div class="header-titles">
-          <span class="badge-gold">UNIFIED CANVAS &amp; MINA FONT</span>
-          <h1 class="card-title">Zelij &amp; Bangla Text</h1>
-        </div>
-        <button type="button" id="toggle-panel-btn" class="icon-btn" title="Toggle Controls" aria-expanded="true">
-          Hide UI
-        </button>
-      </header>
 
-      <div class="control-body" id="control-body">
-        <p class="card-description">
-          Unified single-canvas Zelij background featuring 4 translucent floating boxes (Purple, Burgundy, Blue &amp; Ivory) typeset in the Bangla font <strong>Mina</strong>, presenting successive articles of the UN Declaration of Human Rights.
-        </p>
-
-        <!-- Glaze harmony selector -->
-        <div class="control-group">
-          <label for="palette-select" class="control-label">Ceramic Harmony</label>
-          <select id="palette-select" class="control-select">
-            <option value="imperialBurgundy">Imperial Burgundy &amp; Royal Purple</option>
-            <option value="crimsonMajorelle">Crimson Majorelle &amp; Violet</option>
-            <option value="andalusianGarnet">Andalusian Garnet &amp; Imperial Purple</option>
-            <option value="royalMarrakech">Royal Marrakech &amp; Orchid</option>
-          </select>
-        </div>
-
-        <!-- Moroccan blue rectangle boundary offset slider -->
-        <div class="control-group">
-          <div class="label-row">
-            <label for="rect-offset-slider" class="control-label">Blue Frame Viewport Offset</label>
-            <span id="rect-offset-value" class="control-readout">32 px</span>
-          </div>
-          <input type="range" id="rect-offset-slider" class="control-slider" min="12" max="72" step="2" value="32">
-        </div>
-
-        <!-- Moroccan blue rectangle border thickness slider -->
-        <div class="control-group">
-          <div class="label-row">
-            <label for="rect-thickness-slider" class="control-label">Blue Frame Thickness</label>
-            <span id="rect-thickness-value" class="control-readout">4.0 px</span>
-          </div>
-          <input type="range" id="rect-thickness-slider" class="control-slider" min="2.0" max="8.0" step="0.5" value="4.0">
-        </div>
-
-        <!-- Tile unit scale slider -->
-        <div class="control-group">
-          <div class="label-row">
-            <label for="scale-slider" class="control-label">Tile Unit Scale</label>
-            <span id="scale-value" class="control-readout">160 px</span>
-          </div>
-          <input type="range" id="scale-slider" class="control-slider" min="100" max="240" step="10" value="160">
-        </div>
-
-        <!-- Merged golden outline thickness slider -->
-        <div class="control-group">
-          <div class="label-row">
-            <label for="gold-width-slider" class="control-label">Merged Gold Outline Width</label>
-            <span id="gold-width-value" class="control-readout">1.0 px</span>
-          </div>
-          <input type="range" id="gold-width-slider" class="control-slider" min="0.5" max="2.5" step="0.1" value="1.0">
-        </div>
-
-        <!-- Control buttons -->
-        <div class="button-row">
-          <button type="button" id="toggle-all-opacity-btn" class="secondary-control-btn">
-            Toggle All Opacity
-          </button>
-          <button type="button" id="regenerate-btn" class="primary-btn">
-            Refresh Glaze
-          </button>
-        </div>
-      </div>
-    </section>
-  </main>
 
   <!-- External script containing the merged single-canvas renderer and floating box controller -->
   <script src="script.js"></script>
