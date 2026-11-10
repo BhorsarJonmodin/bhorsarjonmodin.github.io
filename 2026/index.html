@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ভরসার কুড়ি পূর্ণ করে একুশে পা</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Incorporate Mina Bangla Font (Regular 400 and Bold 700) -->
+  <link href="https://fonts.googleapis.com/css2?family=Mina:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Viewport Background of Zelij Tile Patterns -->
+  <div id="zelij-viewport-background" role="img" aria-label="Screen overlaid with patterns rendered, as imitated from Moroccan Zelij tiles">
+
+    <!-- Zelij Tile patterns, as generated via CSS & JS -->
+    <canvas id="zelij-canvas"></canvas>
+
+    <!-- Offset inward boundary from viewport -->
+    <div id="moroccan-blue-offset-rect" class="moroccan-blue-offset-rect" aria-hidden="true"></div>
+
+    <!-- Fadening of edges of the viewport -->
+    <div class="zelij-vignette-layer"></div>
+  </div>
+
+  <!-- floating text box zone -->
+  <section id="blue-frame-inner-stage" class="blue-frame-inner-stage" aria-label="Content Stage Inside Moroccan Blue Rectangle">
+
+    <div class="floating-boxes-scroll-container" id="floating-boxes-container">
+
+      <!-- Birthday Wish -->
+      <article class="zelij-floating-box is-opaque theme-burgundy" id="box-2">
+
+        <header class="floating-box-header">
+          <h2 class="floating-box-title">শুভ জন্মদিন, ভরসা</h2>
+        </header>
+
+        <div class="floating-box-body">
+          <p class="floating-box-text">
+          বিগত বিশ বছরের জীবনপথে তোর যাত্রার অভিজ্ঞতা তোকে আরো আরো অনেক জীবনকে, নিজেকে, মানুষকে, পৃথিবীকে, ও জগৎকে চিনতে চিনিয়ে তুলুক। ভবিষ্যতের হাতছানির হাতে হাত রেখে এগিয়ে যা, সমস্ত সীমাবদ্ধতা ফেলে রেখে, নিজের ব্যতিরেকে অন্য সমস্ত জীব ও জড়কে ভুলে গিয়ে, নিজেকে অসীমের দিগন্তে উন্মুক্ত রাখ। পরিশেষে, কিন্তু সর্বাপেক্ষা গুরুত্বপূর্ণ, সুখী, ও খুশি থাক সর্বদা, বাকি যাই হয়ে যাক না কেন।          </p>
+        </div>
+
+      </article>
+
+      <!-- Birthday Gift -->
+      <article class="zelij-floating-box is-opaque theme-ivory" id="box-4">
+
+        <header class="floating-box-header">
+          <h2 class="floating-box-title">জন্মদিনের উপহার</h2>
+        </header>
+
+        <div class="floating-box-body">
+          <p class="floating-box-text">
+            <a href="/কাছের মানুষ - সুচিত্রা ভট্টাচার্য.pdf" target="_blank">এই বইটা দেখ,</a> উল্টে পাল্টে দেখে ভালো লাগলে, পড়ে দেখিস পুরোটা, ভার্চুয়াল জগতের মাধ্যমে আমার পক্ষ থেকে এইটুকু রইলো...
+          </p>
+        </div>
+
+      </article>
+
+    </div>
+  </section>
+
+
+
+  <!-- JS for background pattern rendering, and scrolling of floating boxes -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,10 +1,8 @@
 /* ==========================================================================
-   MOROCCAN ZELIJ BACKGROUND WITH MERGED GOLD OVERLAY & MINA BANGLA BOXES
-   Pure CSS3 - Fully documented rules covering viewport pinning, Moroccan blue
-   offset rectangle, Mina font typography, and ivory theme modifiers.
+   MOROCCAN ZELIJ TILE BACKGROUND, AND ASSOCIATED FLOATING BOXES FOR TEXT, AND OTHER PURPOSES
    ========================================================================== */
 
-/* Import Bangla Google Font Mina (fallback if CDN link is blocked or cached) */
+/* Import Bangla Google Font Mina (fallback) */
 @import url('https://fonts.googleapis.com/css2?family=Mina:wght@400;700&display=swap');
 
 /* Root theme variables for palettes, rectangle offsets, and sizing */
@@ -50,18 +48,16 @@ body {
    1. FULL-VIEWPORT ZELIJ BACKGROUND & UNIFIED CANVAS
    ========================================================================== */
 
-/* Background wrapper locked to all four viewport edges (100vw x 100vh) */
 #zelij-viewport-background {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   z-index: 1;
-  pointer-events: none; /* Let all clicks pass through to floating boxes and UI */
+  pointer-events: none;
   overflow: hidden;
 }
 
-/* Single unified canvas rendering base ceramic tiles AND thin golden outline */
 #zelij-canvas {
   position: absolute;
   inset: 0;
@@ -75,7 +71,7 @@ body {
    2. THIN MOROCCAN BLUE RECTANGLE OFFSET FROM VIEWPORT BOUNDARIES
    ========================================================================== */
 
-/* Thin rectangle inset from all four viewport boundaries */
+/* Thin rectangle inset from viewport boundaries */
 .moroccan-blue-offset-rect {
   position: absolute;
   top: var(--rect-offset, 32px);
@@ -94,7 +90,7 @@ body {
   transition: top 0.1s ease, right 0.1s ease, bottom 0.1s ease, left 0.1s ease, border-width 0.1s ease;
 }
 
-/* Ambient vignette layer for perimeter depth */
+/* Viewport Edge Shadowing */
 .zelij-vignette-layer {
   position: absolute;
   inset: 0;
@@ -111,7 +107,7 @@ body {
    3. INNER SAFE-ZONE STAGE & SCROLLABLE FLOATING BOXES CONTAINER
    ========================================================================== */
 
-/* Inner stage locked strictly inside the Moroccan blue offset rectangle */
+/* Fixed container inside thin rectangle */
 .blue-frame-inner-stage {
   position: fixed;
   /* Top, right, bottom, left insets mathematically bound the stage inside the blue line */
@@ -123,23 +119,21 @@ body {
   max-width: calc(100vw - (var(--rect-offset, 32px) + var(--rect-thickness, 4px) + var(--inner-stage-gap, 16px)) * 2);
   max-height: calc(100vh - (var(--rect-offset, 32px) + var(--rect-thickness, 4px) + var(--inner-stage-gap, 16px)) * 2);
   overflow: hidden;
-  pointer-events: none; /* Empty stage space allows clicks through to background */
+  pointer-events: none;
 }
 
-/* Scrollable container for floating boxes: automatically scrolls when multiple boxes are present */
+/* Scrollable container for floating boxes */
 .floating-boxes-scroll-container {
   width: 100%;
   height: 100%;
   max-width: 100%;
   max-height: 100%;
-  /* Enable smooth vertical scrolling when multiple boxes exceed viewport space */
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 4px 14px 20px 4px;
-  /* Custom thin golden scrollbar */
   scrollbar-width: thin;
   scrollbar-color: rgba(212, 175, 55, 0.5) rgba(59, 7, 100, 0.2);
 }
@@ -162,19 +156,18 @@ body {
    4. FLOATING BOX BASE STYLING (NO VIEWPORT CAPS, NO INTERNAL SCROLL)
    ========================================================================== */
 
-/* Floating box card element: elongates naturally without internal scrollbars */
+/* Floating box card element */
 .zelij-floating-box {
-  pointer-events: auto; /* Re-enable pointer events for text selection and buttons */
+  pointer-events: auto;
   width: 420px;
-  max-width: none;  /* Removed viewport boundary protection */
-  max-height: none; /* Can elongate to any height required by its content */
+  max-width: none;
+  max-height: none;
   display: flex;
   flex-direction: column;
   border-radius: 12px;
   padding: 16px 20px;
   color: var(--text-main);
   font-family: var(--font-bangla);
-  /* Thin golden outer border paired with an inner Moroccan blue hairline */
   border: 1px solid rgba(212, 175, 55, 0.72);
   box-shadow:
     0 12px 32px rgba(18, 4, 36, 0.58),
@@ -185,7 +178,7 @@ body {
     border-color 0.2s ease,
     box-shadow 0.2s ease,
     color 0.25s ease;
-  flex-shrink: 0; /* Maintain natural card dimensions inside flex container */
+  flex-shrink: 0;
 }
 
 .zelij-floating-box:hover {
@@ -206,28 +199,23 @@ body {
 }
 
 .zelij-floating-box.is-translucent.theme-purple {
-  background-color: rgba(46, 16, 101, 0.50); /* ~50% opacity royal amethyst purple */
+  background-color: rgba(46, 16, 101, 0.50);
   color: #f9f5f0;
 }
 
 .zelij-floating-box.is-translucent.theme-burgundy {
-  background-color: rgba(92, 14, 28, 0.50); /* ~50% opacity imperial wine burgundy */
+  background-color: rgba(92, 14, 28, 0.50);
   color: #fbf5f6;
 }
 
 .zelij-floating-box.is-translucent.theme-blue {
-  background-color: rgba(15, 60, 136, 0.50); /* ~50% opacity Moroccan cobalt blue */
+  background-color: rgba(15, 60, 136, 0.50);
   color: #f4f8fe;
 }
 
-/* NEW TRANSLUCENT IVORY THEME */
 .zelij-floating-box.is-translucent.theme-ivory {
-  background-color: rgba(248, 244, 232, 0.52); /* ~50% opacity warm ivory / alabaster */
-  color: #1e132a; /* Deep ink tone for crisp legibility against light ivory */
-  border: 1px solid rgba(184, 134, 11, 0.75);
-  box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.42),
-    inset 0 0 0 1px rgba(212, 175, 55, 0.5);
+  background-color: rgba(248, 244, 232, 0.52); 
+  color: #1e132a; 
 }
 
 .zelij-floating-box.is-translucent.theme-ivory .floating-box-tag {
@@ -238,22 +226,12 @@ body {
   color: #1a0f26;
 }
 
-.zelij-floating-box.is-translucent.theme-ivory .bengali-declaration-text {
+.zelij-floating-box.is-translucent.theme-ivory .floating-box-text {
   color: #241432;
 }
 
 .zelij-floating-box.is-translucent.theme-ivory .floating-box-meta {
   color: #5c4a5e;
-}
-
-.zelij-floating-box.is-translucent.theme-ivory .floating-box-action {
-  background: rgba(114, 17, 33, 0.12);
-  color: #721121;
-  border-color: rgba(114, 17, 33, 0.45);
-}
-
-.zelij-floating-box.is-translucent.theme-ivory .floating-box-action:hover {
-  background: rgba(114, 17, 33, 0.24);
 }
 
 /* -------------------- OPAQUE MODIFIERS (SOLID CERAMIC) ------------------- */
@@ -263,28 +241,23 @@ body {
 }
 
 .zelij-floating-box.is-opaque.theme-purple {
-  background-color: #2b0952; /* Solid deep amethyst purple */
+  background-color: #2b0952;
   color: #f9f5f0;
 }
 
 .zelij-floating-box.is-opaque.theme-burgundy {
-  background-color: #450a16; /* Solid imperial burgundy */
+  background-color: #450a16; 
   color: #fbf5f6;
 }
 
 .zelij-floating-box.is-opaque.theme-blue {
-  background-color: #0c2d64; /* Solid Moroccan cobalt blue */
+  background-color: #0c2d64; 
   color: #f4f8fe;
 }
 
-/* NEW OPAQUE IVORY THEME */
 .zelij-floating-box.is-opaque.theme-ivory {
-  background-color: #f9f5ea; /* Solid warm hand-cast ivory ceramic */
+  background-color: #f9f5ea; 
   color: #1a0f26;
-  border: 1px solid rgba(184, 134, 11, 0.85);
-  box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.5),
-    inset 0 0 0 1px rgba(212, 175, 55, 0.6);
 }
 
 .zelij-floating-box.is-opaque.theme-ivory .floating-box-tag {
@@ -295,22 +268,12 @@ body {
   color: #1a0f26;
 }
 
-.zelij-floating-box.is-opaque.theme-ivory .bengali-declaration-text {
+.zelij-floating-box.is-opaque.theme-ivory .floating-box-text {
   color: #241432;
 }
 
 .zelij-floating-box.is-opaque.theme-ivory .floating-box-meta {
   color: #5c4a5e;
-}
-
-.zelij-floating-box.is-opaque.theme-ivory .floating-box-action {
-  background: rgba(114, 17, 33, 0.12);
-  color: #721121;
-  border-color: rgba(114, 17, 33, 0.45);
-}
-
-.zelij-floating-box.is-opaque.theme-ivory .floating-box-action:hover {
-  background: rgba(114, 17, 33, 0.24);
 }
 
 /* ==========================================================================
@@ -342,14 +305,13 @@ body {
 }
 
 .floating-box-body {
-  /* Removed internal scrolling: natural elongation without inner scrollbars */
   overflow: visible;
   max-height: none;
   padding-right: 0;
 }
 
-/* Bengali text typeset in Mina font with generous line spacing */
-.bengali-declaration-text {
+/* Bengali typeset in Mina font */
+.floating-box-text {
   font-family: var(--font-bangla);
   font-size: 0.96rem;
   line-height: 1.68;
@@ -373,24 +335,7 @@ body {
   color: var(--text-muted);
 }
 
-.floating-box-action {
-  font-family: var(--font-bangla);
-  padding: 5px 10px;
-  border-radius: 5px;
-  border: 1px solid rgba(212, 175, 55, 0.55);
-  background: rgba(212, 175, 55, 0.16);
-  color: var(--gold-highlight);
-  font-size: 0.76rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.floating-box-action:hover {
-  background: rgba(212, 175, 55, 0.32);
-}
-
-/* Responsive adjustments for mobile viewports */
+/* Responsive viewport */
 @media (max-width: 600px) {
   .zelij-floating-box {
     width: 100%;

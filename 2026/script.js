@@ -1,14 +1,6 @@
 /**
  * ============================================================================
- * MOROCCAN ZELIJ BACKGROUND — MERGED GOLD OVERLAY & SCROLLABLE FLOATING BOXES
- * Pure Vanilla JavaScript (ES6)
- *
- * Implemented changes:
- *  1. Merged golden outline overlay directly into the base Zelij canvas pipeline,
- *     eliminating the secondary canvas for optimal performance and single-pass rendering.
- *  2. Managed scrollable floating boxes strictly bounded inside the Moroccan blue
- *     offset rectangle (no dragging needed; automatically scrolls when >1 box is present).
- *  3. Dynamically clamped floating box dimensions so boxes never exceed viewport dimensions.
+ * MOROCCAN ZELIJ BACKGROUND & SCROLLABLE FLOATING BOXES GENERATOR
  * ============================================================================
  */
 
@@ -19,18 +11,15 @@
    * 1. DOM REFERENCES & APPLICATION STATE
    * -------------------------------------------------------------------------- */
 
-  // Single unified canvas rendering both the base ceramic tiles and golden outlines
+  // Zelij Canvas
   const canvas = document.getElementById("zelij-canvas");
   const ctx = canvas.getContext("2d");
 
-  // Moroccan blue offset rectangle DOM element & scrollable floating boxes container
+  // Thin Rectangle and scrolling container
   const blueOffsetRectEl = document.getElementById("moroccan-blue-offset-rect");
   const floatingBoxesContainer = document.getElementById("floating-boxes-container");
 
-  // Fine-tuning customization panel removed per user request.
-  // The Moroccan Zelij pattern, golden overlay, and floating boxes render in pure unobstructed display mode.
-
-  // Traditional Moroccan ceramic palettes with burgundy rosettes and royal purple base
+  // Zelij tiles colour palette
   const PALETTES = {
     imperialBurgundy: {
       grout: "#3b0764",          // Deep royal amethyst purple joints
@@ -112,14 +101,14 @@
   }
 
   /* --------------------------------------------------------------------------
-   * 3. ZELIJ GEOMETRY CONSTRUCTION (BURGUNDY ROSETTES & PURPLE BASE)
+   * 3. ZELIJ GEOMETRY CONSTRUCTION
    * -------------------------------------------------------------------------- */
 
   function buildCellPolygons(cx, cy, S) {
     const polygons = [];
     const half = S * 0.5;
 
-    // 0. Base square cell polygon glazed in royal Moroccan purple
+    // 0. Base square cell polygon
     polygons.push({
       role: "purpleTile",
       points: [
@@ -352,7 +341,7 @@
   }
 
   /* --------------------------------------------------------------------------
-   * 4. MERGED SINGLE-CANVAS RENDERING (TILES + GOLD OVERLAY TOGETHER)
+   * 4. CANVAS RENDERING
    * -------------------------------------------------------------------------- */
 
   function tracePolygonPath(targetCtx, points) {
@@ -374,10 +363,7 @@
     }
   }
 
-  /**
-   * Unified render loop: paints both the base glazed ceramic tiles and
-   * the thin metallic golden outline overlay onto a single canvas.
-   */
+
   function renderMergedZelijCanvas() {
     const palette = PALETTES[state.paletteKey] || PALETTES.imperialBurgundy;
     const width = state.viewportWidth;
@@ -445,7 +431,6 @@
       );
     }
 
-    // STEP D: MERGED GOLDEN OUTLINE OVERLAY (Rendered directly on the same canvas)
     // Build a crisp 24k metallic gold linear gradient across the canvas
     const goldGrad = ctx.createLinearGradient(0, 0, width, height);
     goldGrad.addColorStop(0.0, "#b8860b");
@@ -515,10 +500,7 @@
    * 5. VIEWPORT RESIZING & FLOATING BOX DIMENSION ENFORCEMENT
    * -------------------------------------------------------------------------- */
 
-  /**
-   * Resizes the single canvas and clamps all floating boxes so they never
-   * exceed the viewport width or height.
-   */
+
   function resizeViewport() {
     state.viewportWidth = window.innerWidth;
     state.viewportHeight = window.innerHeight;
@@ -532,14 +514,10 @@
     computeViewportTessellation();
     renderMergedZelijCanvas();
 
-    // Clamp floating boxes so no box ever exceeds viewport dimensions
     enforceFloatingBoxViewportLimits();
   }
 
-  /**
-   * Viewport boundary protection and internal scrolling removed per user request:
-   * Floating boxes elongate naturally according to their content without viewport clamping.
-   */
+
   function enforceFloatingBoxViewportLimits() {
     // Viewport boundary limits removed: boxes are not clamped to viewport dimensions
     const boxes = document.querySelectorAll(".zelij-floating-box");
@@ -555,10 +533,10 @@
 
   // Helper mapping box theme classes to Bengali metadata descriptions
   const THEME_LABELS = {
-    "theme-purple": { translucent: "স্বচ্ছ জাম রঙের থিম (Purple)", opaque: "কঠিন জাম রঙের থিম (Purple)" },
-    "theme-burgundy": { translucent: "স্বচ্ছ বার্গান্ডি থিম (Burgundy)", opaque: "কঠিন বার্গান্ডি থিম (Burgundy)" },
-    "theme-blue": { translucent: "স্বচ্ছ মরোক্কান নীল থিম (Blue)", opaque: "কঠিন মরোক্কান নীল থিম (Blue)" },
-    "theme-ivory": { translucent: "স্বচ্ছ হাতির দাঁতের থিম (Ivory)", opaque: "কঠিন হাতির দাঁতের থিম (Ivory)" }
+    "theme-purple": { translucent: "স্বচ্ছ জাম রঙের থিম (Purple)", opaque: "সলিড জাম রঙের থিম (Purple)" },
+    "theme-burgundy": { translucent: "স্বচ্ছ বার্গান্ডি থিম (Burgundy)", opaque: "সলিড বার্গান্ডি থিম (Burgundy)" },
+    "theme-blue": { translucent: "স্বচ্ছ মরোক্কান নীল থিম (Blue)", opaque: "সলিড মরোক্কান নীল থিম (Blue)" },
+    "theme-ivory": { translucent: "স্বচ্ছ হাতির দাঁতের থিম (Ivory)", opaque: "সলিড হাতির দাঁতের থিম (Ivory)" }
   };
 
   function updateBoxMeta(box, isOpaque) {
@@ -573,25 +551,8 @@
     metaEl.textContent = isOpaque ? "কঠিন মোড (Opaque)" : "স্বচ্ছ মোড (Translucent)";
   }
 
-  // Wire opacity toggling buttons for individual floating boxes
-  function initOpacityToggleButtons() {
-    const toggleBtns = document.querySelectorAll(".toggle-opacity-btn");
-    toggleBtns.forEach((btn) => {
-      btn.addEventListener("click", function () {
-        const boxId = btn.getAttribute("data-target");
-        const box = document.getElementById(boxId) || btn.closest(".zelij-floating-box");
-        if (!box) return;
 
-        const isCurrentlyOpaque = box.classList.contains("is-opaque");
-        box.classList.toggle("is-opaque", !isCurrentlyOpaque);
-        box.classList.toggle("is-translucent", isCurrentlyOpaque);
 
-        updateBoxMeta(box, !isCurrentlyOpaque);
-      });
-    });
-  }
-
-  // (Fine-tuning UI controls removed: pattern renders in pure, clean display mode)
 
   // Window resize handler
   window.addEventListener("resize", resizeViewport);
@@ -600,5 +561,4 @@
    * 7. INITIALIZE ON LOAD
    * -------------------------------------------------------------------------- */
   resizeViewport();
-  initOpacityToggleButtons();
 })();
